@@ -1,18 +1,18 @@
 const { sendResponse } = require("../../utils/response/response");
 const sendFile = require("../../utils/response/sendFile");
-
+const path = require('path')
 /**
  * @param {Socket} socket 
  */
 const rootRoutes = (urlHeaders, socket) => {
     const { headers, method, route } = urlHeaders;
-    switch (urlHeaders.pathname) {
-        case "/":
-            console.log("root route");
+    console.log(route.pathname);
+    switch (route.pathname) {
+        case "":
             switch (method) {
                 case "get": {
                     // console.log("get method");
-                    sendFile(__dirname + "/../public/index.html", socket);
+                    sendFile(path.resolve(__dirname, "../../public/index.html"), socket);
                     break;
                 }
                 default: {

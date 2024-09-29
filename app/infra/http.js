@@ -4,7 +4,7 @@ const { Socket } = require("net");
 const { serverLog } = require("../logger/logger");
 const { sendResponse } = require("../utils/response/response");
 const getUrlHeaders = require("../utils/getUrlHeaders");
-const rootRoutes = require("./root/routes");
+const rootRoutes = require('../modules/root/routes')
 /**
  * 
  * @param {string} data 
