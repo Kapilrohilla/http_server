@@ -2,8 +2,9 @@
 
 const { Socket } = require("net");
 const { serverLog } = require("../logger/logger");
-const sendResponse = require("../utils/response");
+const { sendResponse } = require("../utils/response");
 const url = require('url');
+const sendFile = require("../utils/sendFile");
 /**
  * 
  * @param {string} data 
@@ -12,21 +13,22 @@ const url = require('url');
 function handleRoute(data, socket) {
     const { headers, method, route } = getUrlHeaders(data)
     serverLog.log(`${method.toUpperCase()} ${route.pathname}`)
+    let shouldContinue;
     switch (route.pathname) {
-        case "/": {
-            sendResponse(200, "text/plain", "", "", socket)
+        case "": {
+            shouldContinue = sendFile(__dirname + "/../public/index.html", socket)
             break;
         }
         case "/test": {
-            sendResponse(200, 'text/plain', '', 'working!', socket)
+            shouldContinue = sendResponse(200, 'text/plain', '', 'working!', socket)
             break;
         }
         default: {
-            sendResponse(404, 'text/plain', '', 'Not found', socket)
+            shouldContinue = sendResponse(404, 'text/plain', '', 'Not found', socket)
             break
         }
     }
-    socket.end()
+    if (!shouldContinue) socket.end()
 }
 /**
  * 

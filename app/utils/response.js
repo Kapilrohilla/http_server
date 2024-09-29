@@ -23,4 +23,4 @@ function sendResponse(statusCode, contentType, responseHeaders, responeBody, soc
 const getResponseSize = (responseBody) => {
     return new Blob([responseBody]).size;
 }
-module.exports = sendResponse
+module.exports = { sendResponse, getResponseSize }
