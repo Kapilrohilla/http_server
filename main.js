@@ -1,13 +1,13 @@
 const net = require("net");
-const { serverLog } = require('./logger/logger');
-const handleRoute = require("./modules/routes");
+const { serverLog } = require('./app/logger/logger');
+const router = require('./app/infra/http')
 
 console.log("Logs from your program will appear here!");
 
 const server = net.createServer((socket) => {
     socket.setEncoding('utf-8')
 
-    socket.on('data', (data) => handleRoute(data, socket))
+    socket.on('data', (data) => router(data, socket))
     socket.on('end', () => {
     })
     socket.on("close", () => {
