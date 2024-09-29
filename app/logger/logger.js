@@ -4,14 +4,17 @@ class Logger {
     }
 
     log(message) {
-        console.log(`[${this.name}] ${message}`);
+        console.log(`[log] ${message}`);
     }
 
     error(err_msg) {
-        console.error(`[${this.name}] ${err_msg}`);
+        console.error(`[erorr] ${err_msg}`);
+    }
+    info(err_msg) {
+        console.error(`[info] ${err_msg}`);
     }
 }
 
 module.exports = {
-    serverLog: new Logger("server"),
+    serverLog: new Logger(),
 }
