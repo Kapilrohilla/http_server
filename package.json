@@ -1,7 +1,7 @@
 {
   "scripts": {
     "format": "prettier --write \"src/**/*.js\"",
-    "dev": "node index.js"
+    "dev": "node --watch index.js"
   },
   "dependencies": {},
   "devDependencies": {

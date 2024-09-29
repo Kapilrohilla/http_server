@@ -3,6 +3,7 @@ const { serverLog } = require('../logger/logger');
 const { sendResponse } = require('../utils/response/response');
 const getUrlHeaders = require('../utils/getUrlHeaders');
 const rootRoutes = require('../modules/root/routes');
+const handleRequest = require('../lib/req/request');
 /**
  *
  * @param {string} data
@@ -11,6 +12,8 @@ const rootRoutes = require('../modules/root/routes');
 function handleRoute(data, socket) {
   const { headers, method, route } = getUrlHeaders(data);
   serverLog.log(`${method.toUpperCase()} ${route.pathname}`);
+  // extends the socket object to include a 'req' property
+  handleRequest(data, socket);
   switch (route.pathname) {
     case '': {
       rootRoutes(getUrlHeaders(data), socket);
