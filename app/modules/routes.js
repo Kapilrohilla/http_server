@@ -1,19 +1,49 @@
 
-// GET routes
-function handleGETRoutes(route, socket) {
-    console.log(route);
-    switch (route) {
+
+const { Socket } = require("net");
+const { serverLog } = require("../logger/logger");
+const sendResponse = require("../utils/response");
+const url = require('url');
+/**
+ * 
+ * @param {string} data 
+ * @param {Socket} socket 
+ */
+function handleRoute(data, socket) {
+    const { headers, method, route } = getUrlHeaders(data)
+    serverLog.log(`${method.toUpperCase()} ${route.pathname}`)
+    switch (route.pathname) {
         case "/": {
-            socket.write("HTTP/1.1 200 OK\r\n\r\n");
+            sendResponse(200, "text/plain", "", "", socket)
+            break;
+        }
+        case "/test": {
+            sendResponse(200, 'text/plain', '', 'working!', socket)
             break;
         }
         default: {
-            socket.write("HTTP/1.1 404 Not Found\r\n\r\n");
-            break;
+            sendResponse(404, 'text/plain', '', 'Not found', socket)
+            break
         }
     }
-    socket.end();
-
+    socket.end()
+}
+/**
+ * 
+ * @param {string} data 
+ * 
+ * @returns 
+ */
+const getUrlHeaders = (data) => {
+    data = data.toLowerCase()
+    const dataArr = data.split("\r\n")
+    const urlstring = url.parse(dataArr[0].split(" ")[1], true);
+    urlstring.pathname = urlstring.pathname.replace(/\/$/, "");
+    return {
+        method: dataArr[0].split(" ")[0],
+        route: urlstring,
+        headers: dataArr.slice(1)
+    }
 }
 
-module.exports = handleGETRoutes;
+module.exports = handleRoute;
