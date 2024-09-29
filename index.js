@@ -1,6 +1,6 @@
 const net = require("net");
-const { serverLog } = require('./src/logger/logger');
-const router = require('./infra/http')
+const { serverLog } = require('./lib/logger/logger')
+const router = require('./src/http/router')
 
 console.log("Logs from your program will appear here!");
 
