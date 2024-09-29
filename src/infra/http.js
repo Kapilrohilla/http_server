@@ -7,16 +7,16 @@ const handleRequest = require('../lib/req/request');
 /**
  *
  * @param {string} data
- * @param {Socket} socket
+ * @param {import('../lib/req/request').ExtendedSocket} socket
  */
 function handleRoute(data, socket) {
-  const { headers, method, route } = getUrlHeaders(data);
-  serverLog.log(`${method.toUpperCase()} ${route.pathname}`);
   // extends the socket object to include a 'req' property
   handleRequest(data, socket);
+  const route = socket.req.route;
   switch (route.pathname) {
-    case '': {
-      rootRoutes(getUrlHeaders(data), socket);
+    case '/': {
+      // rootRoutes(getUrlHeaders(data), socket);
+      rootRoutes(socket)
       break;
     }
     case '/test': {

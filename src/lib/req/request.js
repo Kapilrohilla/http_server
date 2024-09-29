@@ -21,13 +21,13 @@ const handleRequest = (data, client) => {
     const { method, route } = getMethodAndPath(data);
     client.req.method = method;
     client.req.route = route;
+    client.req.path = route.pathname;
+    client.req.query = route.query;
     const headerAndBody = getHeadersAndBody(data);
     client.req.plainbody = headerAndBody.body;
     client.req.headers = headerAndBody.headers
     const body = getBody({ contentType: client.req.headers['content-type'], plainbody: client.req.plainbody });
     client.req.body = body;
-
-    console.log(client.req);
 }
 
 module.exports = handleRequest;

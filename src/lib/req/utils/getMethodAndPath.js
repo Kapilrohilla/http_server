@@ -5,7 +5,7 @@ const url = require('url');
  */
 module.exports = (data) => {
     const headers = data.split("\r\n")
-    const method = headers[0].split(" ")[0];
+    const method = headers[0].split(" ")[0].toUpperCase();
     let route = headers[0].split(" ")[1].replace(/\/$/, "");
     if (route === "") {
         route = "/";
